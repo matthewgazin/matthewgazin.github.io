@@ -1,5 +1,50 @@
- <!DOCTYPE html>
-   <html>
-     <head><title>My Site</title></head>
-     <body><h1>Hello, world!</h1></body>
-   </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matthew</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap gate">
+  <div>
+    <h1>Matthew</h1>
+
+    <div id="lock">
+      <p class="lede">This site has two sides. Enter the password to choose one.</p>
+      <form id="form">
+        <label for="pw" hidden>Password</label>
+        <input id="pw" type="password" autocomplete="off" required>
+        <button type="submit">Enter</button>
+      </form>
+      <p class="hint">Enter Matthew's favorite color and birth date for access.</p>
+      <p class="hint">Type them together with no spaces, like blue1/2/1999.</p>
+      <p id="error" role="alert"></p>
+    </div>
+
+    <div id="choose" hidden>
+      <p class="lede">Choose a side.</p>
+      <div class="doors">
+        <a class="door" href="professional.html"><strong>Professional</strong>LinkedIn, projects, research, referrals</a>
+        <a class="door personal" href="personal.html"><strong>Personal</strong>Books, paintings, opinions, lessons</a>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="auth.js"></script>
+<script>
+const lockEl = document.getElementById("lock"), chooseEl = document.getElementById("choose");
+function showChoice(){ lockEl.hidden = true; chooseEl.hidden = false; }
+if (isUnlocked()) showChoice();
+
+document.getElementById("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const ok = await checkPassword(document.getElementById("pw").value);
+  if (ok) { unlock(); showChoice(); }
+  else { document.getElementById("error").textContent = "That doesn't match. Check the color and date and try again."; }
+});
+</script>
+</body>
+</html>
